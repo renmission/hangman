@@ -1,13 +1,16 @@
 import React from "react";
 
 type HangmanWordProps = {
-    guessedLetters: string[]
-    wordToGuess: string
-    reveal?: boolean
-}
+  guessedLetters: string[];
+  wordToGuess: string;
+  reveal?: boolean;
+};
 
-function HangmanWord({guessedLetters, wordToGuess, reveal = false}: HangmanWordProps) {
-   
+function HangmanWord({
+  guessedLetters,
+  wordToGuess,
+  reveal = false,
+}: HangmanWordProps) {
   return (
     <div
       style={{
@@ -19,13 +22,21 @@ function HangmanWord({guessedLetters, wordToGuess, reveal = false}: HangmanWordP
         fontFamily: "monospace",
       }}
     >
-        {wordToGuess.split("").map((letter, index) => (
-            <span style={{ borderBottom: ".1em solid black" }} key={index}>
-                <span style={{ visibility: guessedLetters.includes(letter) || reveal ? "visible" : "hidden" }}>
-                    {letter}
-                </span>
-            </span>
-        ))}
+      {wordToGuess.split("").map((letter, index) => (
+        <span style={{ borderBottom: ".1em solid black" }} key={index}>
+          <span
+            style={{
+              visibility:
+                guessedLetters.includes(letter) || reveal
+                  ? "visible"
+                  : "hidden",
+              color: !guessedLetters.includes(letter) && reveal ? "red" : "black"
+            }}
+          >
+            {letter}
+          </span>
+        </span>
+      ))}
     </div>
   );
 }

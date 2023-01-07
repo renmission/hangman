@@ -1,3 +1,6 @@
+* {
+    font-family: monospace;
+}
 .btn {
     width: 100%;
     border: 3px solid gray;
@@ -29,7 +32,7 @@
     border-radius: 5px;
     font-size: 1.5rem;
     border: 2px solid black;
-    font-family: monospace;
+    
     font-weight: bold;
     cursor: pointer;
     background-color: #fff;
@@ -39,4 +42,11 @@
     background-color: #000;
     color: #fff;
     transition: all .5ms ease-in-out;
+    align-items: center;
+}
+
+.resetP {
+    color: gray;
+    font-size: 1rem;
+    font-weight: bold;
 }

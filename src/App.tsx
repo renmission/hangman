@@ -5,10 +5,12 @@ import HangmanWord from "./components/HangmanWord";
 import Keyboard from "./components/Keyboard";
 import styles from "./styles/Keyboard.module.css";
 
+function getWord() {
+  return words[Math.floor(Math.random() * words.length)];
+}
+
 function App() {
-  const [wordToGuess, setWordToGuess] = useState(() => {
-    return words[Math.floor(Math.random() * words.length)];
-  });
+  const [wordToGuess, setWordToGuess] = useState(getWord);
 
   console.log(wordToGuess);
 
@@ -51,6 +53,24 @@ function App() {
     };
   }, [guessedLetters]);
 
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      const key = e.key;
+
+      if (key !== "Enter") return;
+
+      e.preventDefault();
+      setGuessedLetters([]);
+      setWordToGuess(getWord());
+    };
+
+    document.addEventListener("keypress", handler);
+
+    return () => {
+      document.removeEventListener("keypress", handler);
+    };
+  });
+
   return (
     <div
       style={{
@@ -63,19 +83,21 @@ function App() {
         alignItems: "center",
       }}
     >
-      <div style={{ fontSize: "2rem", textAlign: "center" }}>
+     
+      <HangmanDrawing numberOfGuesses={incorrectLetters.length} />
+
+      <div style={{ fontSize: "2rem", textAlign: "center"}}>
         {isWinner && "Congratulation! - Refresh to try again."}
         {isLoser && "Nice try! - Refresh to try again."}
       </div>
-      <HangmanDrawing numberOfGuesses={incorrectLetters.length} />
 
       {isWinner || isLoser ? (
-        <button
-          onClick={refresh}
-          className={styles.resetBtn}
-        >
-          Reset
-        </button>
+        <div>
+          <button onClick={refresh} className={styles.resetBtn}>
+            Reset
+          </button>
+          <p className={styles.resetP}>or just press "Enter" to refresh.</p>
+        </div>
       ) : (
         ""
       )}
